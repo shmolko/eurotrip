@@ -1,0 +1,166 @@
+/* ============================================================
+   STYLE SHEET – controls how the website looks
+   (colours, fonts, spacing, layout). The content itself
+   lives in index.html.
+   ============================================================ */
+
+/* Colour palette, defined once and reused below.
+   Change a colour here and it updates everywhere. */
+:root {
+  --green: #2f6f4f;        /* main accent colour (headings, links) */
+  --green-light: #eef7f0;  /* background of the "Pros" box */
+  --red-light: #fbefee;    /* background of the "Cons" box */
+  --yellow-light: #fff8e6; /* background of the "Cost" box */
+  --blue-light: #eef3fa;   /* background of the "Dogs" box */
+  --text: #222;
+  --muted: #666;
+  --card: #fff;
+  --page: #f5f5f2;         /* page background */
+}
+
+/* Basic page settings: font, colours, no default margin */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--page);
+}
+a { color: var(--green); }
+img { display: block; max-width: 100%; }
+
+/* Keeps the content in a readable column in the middle of the screen */
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 18px; }
+
+/* ---------- Big header at the top (photo with title over it) ---------- */
+.hero {
+  position: relative;
+  color: #fff;
+  /* dark gradient on top of the photo so the white text is readable */
+  background: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.6)),
+              url("images/hallstatt-gosausee.jpg") center / cover;
+  padding: 90px 0 50px;
+}
+.hero h1 { font-size: 2.6rem; margin: 0 0 6px; line-height: 1.15; }
+.hero p { margin: 0; font-size: 1.15rem; opacity: .95; }
+
+/* Grey "good to know" box */
+.note {
+  background: #fff;
+  border-left: 4px solid #8a9bb0;
+  padding: 12px 16px;
+  margin: 24px 0;
+  border-radius: 4px;
+}
+
+/* ---------- Overview cards (the 4 clickable tiles at the top) ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); /* 4 in a row on desktop, stacked on phones */
+  gap: 14px;
+  margin: 10px 0 30px;
+}
+.card {
+  background: var(--card);
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  transition: transform .15s;
+}
+.card:hover { transform: translateY(-3px); }   /* small "lift" effect on mouse-over */
+.card img { width: 100%; height: 130px; object-fit: cover; }
+.card .body { padding: 10px 12px 12px; font-size: .9rem; }
+.card h3 { margin: 0 0 4px; font-size: 1.05rem; color: var(--green); }
+
+/* ---------- One section per option ---------- */
+.option {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  scroll-margin-top: 16px; /* leaves a gap above when jumping here from a card */
+}
+.option h2 {
+  margin: 0 0 6px;
+  color: var(--green);
+  font-size: 1.6rem;
+}
+.meta { color: var(--muted); margin-bottom: 14px; }
+.meta b { color: var(--text); }
+
+/* Photo gallery: photos side by side, each with a small caption */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.gallery figure { margin: 0; }
+.gallery img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;   /* crops photos to the same height without stretching */
+  border-radius: 6px;
+}
+.gallery figcaption { font-size: .8rem; color: var(--muted); margin-top: 3px; }
+
+h4 { margin: 18px 0 6px; font-size: 1.05rem; }
+ul { margin: 4px 0; padding-left: 20px; }
+li { margin-bottom: 4px; }
+
+/* Pros and Cons boxes side by side (stacked on phones) */
+.pc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+.pc > div, .infobox { padding: 10px 14px; border-radius: 6px; }
+.pc h4, .infobox h4 { margin-top: 0; }
+.pros { background: var(--green-light); }
+.cons { background: var(--red-light); }
+
+/* Cost and Dogs boxes side by side */
+.info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.cost { background: var(--yellow-light); }
+.dogs { background: var(--blue-light); }
+.stars { color: #d49a00; letter-spacing: 1px; }
+
+/* Row of link buttons at the bottom of each option */
+.links { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+.links a {
+  background: var(--green);
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: .88rem;
+}
+.links a:hover { opacity: .85; }
+
+/* ---------- Comparison table ---------- */
+.table-wrap { overflow-x: auto; }   /* lets the table scroll sideways on small phones */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  font-size: .95rem;
+}
+th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; }
+th { background: #eef1f4; }
+
+/* ---------- Footer with photo credits ---------- */
+footer { color: var(--muted); font-size: .8rem; padding: 20px 0 40px; }
+footer ul { padding-left: 16px; }
+
+/* ---------- Phone layout: put side-by-side boxes on top of each other ---------- */
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.9rem; }
+  .pc, .info { grid-template-columns: 1fr; }
+  .option { padding: 16px; }
+}
