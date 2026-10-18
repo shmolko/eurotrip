@@ -75,7 +75,7 @@ img { display: block; max-width: 100%; }
 .hero .slogan {
   font-family: "Pacifico", cursive;
   color: #fff;
-  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-size: clamp(2.1rem, 7vw, 3rem);
   text-shadow: 2px 2px 0 var(--ink);
   margin: 10px 0 4px;
 }
@@ -385,24 +385,6 @@ footer a { color: var(--yellow); font-weight: normal; }
   text-shadow: none;
 }
 .credits { columns: 2; padding-left: 16px; }
-
-/* ---------- Folding "But wait, there's more!" list ---------- */
-details.more summary {
-  list-style: none;          /* hides the default little triangle */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-details.more .tap { white-space: nowrap; }  /* keeps "Show activities ▾" on one line */
-details.more summary::-webkit-details-marker { display: none; }
-details.more .tap {
-  font-size: .8rem;
-  font-weight: bold;
-  color: var(--purple);
-  margin-left: 6px;
-}
-details.more[open] .tap { display: none; }  /* hide "Show activities" once opened */
 
 /* Bottom navigation bar and swipe hint: hidden on computers, shown on phones (see below) */
 .bottom-nav, .swipe-hint { display: none; }
