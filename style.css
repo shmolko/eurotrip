@@ -75,7 +75,7 @@ img { display: block; max-width: 100%; }
 .hero .slogan {
   font-family: "Pacifico", cursive;
   color: #fff;
-  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
   text-shadow: 2px 2px 0 var(--ink);
   margin: 10px 0 4px;
 }
