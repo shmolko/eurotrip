@@ -1,166 +1,342 @@
 /* ============================================================
-   STYLE SHEET – controls how the website looks
-   (colours, fonts, spacing, layout). The content itself
-   lives in index.html.
+   STYLE SHEET – "1990s travel agency flyer" look.
+   Controls colours, fonts and layout. The text and photos
+   themselves are in index.html.
    ============================================================ */
 
-/* Colour palette, defined once and reused below.
-   Change a colour here and it updates everywhere. */
+/* Colour palette – change a colour here and it updates everywhere */
 :root {
-  --green: #2f6f4f;        /* main accent colour (headings, links) */
-  --green-light: #eef7f0;  /* background of the "Pros" box */
-  --red-light: #fbefee;    /* background of the "Cons" box */
-  --yellow-light: #fff8e6; /* background of the "Cost" box */
-  --blue-light: #eef3fa;   /* background of the "Dogs" box */
-  --text: #222;
-  --muted: #666;
-  --card: #fff;
-  --page: #f5f5f2;         /* page background */
+  --teal: #19b3a8;
+  --magenta: #ff2e93;
+  --yellow: #ffe600;
+  --orange: #ff7a00;
+  --purple: #6a2bd9;
+  --ink: #111;
+  --paper: #fffdf5;   /* off-white "brochure paper" */
 }
 
-/* Basic page settings: font, colours, no default margin */
 * { box-sizing: border-box; }
+
+/* Whole page: loud 90s confetti pattern made only with CSS
+   (pink and yellow dots on teal, with faint diagonal stripes) */
 body {
   margin: 0;
-  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.55;
-  color: var(--text);
-  background: var(--page);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;  /* THE 90s font */
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+  background-color: var(--teal);
+  background-image:
+    radial-gradient(var(--magenta) 3px, transparent 4px),
+    radial-gradient(var(--yellow) 3px, transparent 4px),
+    repeating-linear-gradient(45deg, transparent 0 22px, rgba(255,255,255,.12) 22px 44px);
+  background-size: 46px 46px, 70px 70px, auto;
+  background-position: 0 0, 23px 35px, 0 0;
 }
-a { color: var(--green); }
+a { color: var(--purple); font-weight: bold; }
 img { display: block; max-width: 100%; }
 
-/* Keeps the content in a readable column in the middle of the screen */
-.wrap { max-width: 1000px; margin: 0 auto; padding: 0 18px; }
+/* Keeps content in a readable column in the middle */
+.wrap { max-width: 1020px; margin: 0 auto; padding: 0 16px; }
 
-/* ---------- Big header at the top (photo with title over it) ---------- */
-.hero {
-  position: relative;
+/* ---------- Scrolling news ticker at the very top ---------- */
+.ticker {
+  background: var(--ink);
+  color: var(--yellow);
+  font-family: "Bungee", Impact, sans-serif;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 7px 0;
+  border-bottom: 4px solid var(--magenta);
+}
+.ticker span {
+  display: inline-block;
+  padding-left: 100%;                 /* text starts off-screen on the right… */
+  animation: scroll 35s linear infinite; /* …and slides to the left forever */
+}
+@keyframes scroll { to { transform: translateX(-100%); } }
+
+/* ---------- Big title ("WordArt") ---------- */
+.hero { text-align: center; padding: 34px 0 10px; }
+.hero h1 {
+  font-family: "Bungee", Impact, sans-serif;
+  font-size: clamp(2.2rem, 7vw, 4.6rem);
+  line-height: 1.05;
+  margin: 0;
+  /* rainbow-filled letters with a hard black shadow = classic WordArt */
+  background: linear-gradient(180deg, var(--yellow) 0%, var(--orange) 45%, var(--magenta) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(4px 4px 0 var(--ink)) drop-shadow(-1px -1px 0 #fff);
+  transform: rotate(-2deg);
+}
+.hero .slogan {
+  font-family: "Pacifico", cursive;
   color: #fff;
-  /* dark gradient on top of the photo so the white text is readable */
-  background: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.6)),
-              url("images/hallstatt-gosausee.jpg") center / cover;
-  padding: 90px 0 50px;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  text-shadow: 2px 2px 0 var(--ink);
+  margin: 10px 0 4px;
 }
-.hero h1 { font-size: 2.6rem; margin: 0 0 6px; line-height: 1.15; }
-.hero p { margin: 0; font-size: 1.15rem; opacity: .95; }
-
-/* Grey "good to know" box */
-.note {
-  background: #fff;
-  border-left: 4px solid #8a9bb0;
-  padding: 12px 16px;
-  margin: 24px 0;
-  border-radius: 4px;
+.hero .dates {
+  display: inline-block;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-weight: bold;
+  padding: 4px 14px;
+  margin-top: 8px;
+  transform: rotate(1deg);
 }
 
-/* ---------- Overview cards (the 4 clickable tiles at the top) ---------- */
+/* ---------- White "brochure page" boxes ---------- */
+.panel {
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--ink);  /* hard, chunky shadow */
+  padding: 26px;
+  margin: 34px 0;
+  position: relative;
+}
+.panel.warning { background: var(--yellow); }
+.panel.warning h3 { margin-top: 0; font-family: "Bungee", Impact, sans-serif; }
+
+/* ---------- Overview tiles ---------- */
+.section-title {
+  font-family: "Bungee", Impact, sans-serif;
+  text-align: center;
+  color: #fff;
+  font-size: 1.8rem;
+  text-shadow: 3px 3px 0 var(--ink);
+  margin: 40px 0 10px;
+}
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); /* 4 in a row on desktop, stacked on phones */
-  gap: 14px;
-  margin: 10px 0 30px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 22px;
 }
 .card {
-  background: var(--card);
-  border-radius: 8px;
-  overflow: hidden;
+  background: #fff;
+  padding: 10px 10px 14px;
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
   text-decoration: none;
-  color: var(--text);
-  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  color: var(--ink);
+  font-weight: normal;
+  position: relative;
   transition: transform .15s;
 }
-.card:hover { transform: translateY(-3px); }   /* small "lift" effect on mouse-over */
-.card img { width: 100%; height: 130px; object-fit: cover; }
-.card .body { padding: 10px 12px 12px; font-size: .9rem; }
-.card h3 { margin: 0 0 4px; font-size: 1.05rem; color: var(--green); }
+.card:nth-child(odd)  { transform: rotate(-2deg); }
+.card:nth-child(even) { transform: rotate(2deg); }
+.card:hover { transform: rotate(0) scale(1.04); }
+.card img { width: 100%; height: 140px; object-fit: cover; border: 2px solid var(--ink); }
+.card h3 { font-family: "Bungee", Impact, sans-serif; font-size: 1rem; margin: 8px 0 2px; color: var(--magenta); }
+.card .tag { font-family: "Pacifico", cursive; font-size: .95rem; color: var(--purple); }
 
-/* ---------- One section per option ---------- */
-.option {
-  background: var(--card);
-  border-radius: 10px;
-  padding: 24px;
-  margin-bottom: 30px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.08);
-  scroll-margin-top: 16px; /* leaves a gap above when jumping here from a card */
+/* ---------- Yellow starburst price badge ---------- */
+.burst {
+  position: absolute;
+  width: 132px;
+  height: 132px;
+  background: var(--yellow);
+  /* star shape with 16 spikes */
+  clip-path: polygon(100.0% 50.0%, 87.3% 57.4%, 96.2% 69.1%, 81.6% 71.1%, 85.4% 85.4%, 71.1% 81.6%, 69.1% 96.2%, 57.4% 87.3%, 50.0% 100.0%, 42.6% 87.3%, 30.9% 96.2%, 28.9% 81.6%, 14.6% 85.4%, 18.4% 71.1%, 3.8% 69.1%, 12.7% 57.4%, 0.0% 50.0%, 12.7% 42.6%, 3.8% 30.9%, 18.4% 28.9%, 14.6% 14.6%, 28.9% 18.4%, 30.9% 3.8%, 42.6% 12.7%, 50.0% 0.0%, 57.4% 12.7%, 69.1% 3.8%, 71.1% 18.4%, 85.4% 14.6%, 81.6% 28.9%, 96.2% 30.9%, 87.3% 42.6%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Bungee", Impact, sans-serif;
+  color: #e00034;
+  font-size: .82rem;
+  line-height: 1.15;
+  padding: 18px;
+  transform: rotate(12deg);
+  animation: pulse 1.6s ease-in-out infinite;  /* gently "throbs" to grab attention */
+}
+.burst b { font-size: 1.15rem; display: block; }
+@keyframes pulse { 50% { transform: rotate(12deg) scale(1.08); } }
+.option > .burst { width: 165px; height: 165px; padding: 30px; font-size: .78rem; top: -50px; right: -34px; }
+.card .burst { width: 86px; height: 86px; font-size: .62rem; padding: 10px; top: -26px; right: -22px; }
+.card .burst b { font-size: .8rem; }
+
+/* ---------- One big section per destination ---------- */
+.option { scroll-margin-top: 20px; }
+.number {
+  display: inline-block;
+  background: var(--magenta);
+  color: #fff;
+  font-family: "Bungee", Impact, sans-serif;
+  padding: 2px 12px;
+  border: 3px solid var(--ink);
+  transform: rotate(-3deg);
 }
 .option h2 {
-  margin: 0 0 6px;
-  color: var(--green);
-  font-size: 1.6rem;
+  font-family: "Bungee", Impact, sans-serif;
+  font-size: clamp(1.4rem, 3.6vw, 2.1rem);
+  line-height: 1.15;
+  margin: 10px 140px 2px 0;   /* right margin keeps the title clear of the starburst */
 }
-.meta { color: var(--muted); margin-bottom: 14px; }
-.meta b { color: var(--text); }
+.option .tagline {
+  font-family: "Pacifico", cursive;
+  color: var(--purple);
+  font-size: 1.3rem;
+  margin: 0 0 16px;
+}
 
-/* Photo gallery: photos side by side, each with a small caption */
+/* Photos styled as tilted snapshots with a strip of tape on top */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 10px 0 24px;
+}
+.gallery figure {
+  margin: 0;
+  background: #fff;
+  padding: 8px 8px 6px;
+  box-shadow: 3px 4px 10px rgba(0,0,0,.35);
+  position: relative;
+  transition: transform .2s;
+}
+.gallery figure:nth-child(1) { transform: rotate(-3deg); }
+.gallery figure:nth-child(2) { transform: rotate(2deg) translateY(6px); }
+.gallery figure:nth-child(3) { transform: rotate(-1.5deg); }
+.gallery figure:hover { transform: rotate(0) scale(1.06); z-index: 2; }
+.gallery figure::before {           /* the "tape" */
+  content: "";
+  position: absolute;
+  top: -10px; left: 50%;
+  width: 70px; height: 20px;
+  margin-left: -35px;
+  background: rgba(255, 230, 0, .75);
+  transform: rotate(-4deg);
+}
+.gallery img { width: 100%; height: 190px; object-fit: cover; }
+.gallery figcaption {
+  font-family: "Chalkboard SE", "Comic Sans MS", "Comic Neue", cursive;
+  font-size: .85rem;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* "Trip facts" box: key numbers at a glance */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 3px solid var(--ink);
   margin-bottom: 18px;
 }
-.gallery figure { margin: 0; }
-.gallery img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;   /* crops photos to the same height without stretching */
-  border-radius: 6px;
+.facts div { padding: 8px 10px; border-right: 3px solid var(--ink); background: #fff; }
+.facts div:last-child { border-right: none; }
+.facts small {
+  display: block;
+  font-family: "Bungee", Impact, sans-serif;
+  font-size: .7rem;
+  color: var(--magenta);
 }
-.gallery figcaption { font-size: .8rem; color: var(--muted); margin-top: 3px; }
 
-h4 { margin: 18px 0 6px; font-size: 1.05rem; }
-ul { margin: 4px 0; padding-left: 20px; }
-li { margin-bottom: 4px; }
-
-/* Pros and Cons boxes side by side (stacked on phones) */
-.pc {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
-}
-.pc > div, .infobox { padding: 10px 14px; border-radius: 6px; }
-.pc h4, .infobox h4 { margin-top: 0; }
-.pros { background: var(--green-light); }
-.cons { background: var(--red-light); }
-
-/* Cost and Dogs boxes side by side */
-.info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
-.cost { background: var(--yellow-light); }
-.dogs { background: var(--blue-light); }
-.stars { color: #d49a00; letter-spacing: 1px; }
-
-/* Row of link buttons at the bottom of each option */
-.links { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
-.links a {
-  background: var(--green);
+/* Section headings inside an option, as slanted colour bars */
+h4 {
+  display: inline-block;
+  font-family: "Bungee", Impact, sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
   color: #fff;
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: .88rem;
+  background: linear-gradient(90deg, var(--purple), var(--magenta));
+  padding: 3px 12px;
+  margin: 18px 0 6px;
+  transform: skewX(-8deg);
 }
-.links a:hover { opacity: .85; }
+ul { margin: 4px 0; padding-left: 22px; }
+li { margin-bottom: 5px; }
+
+/* Pros ("Why you'll love it") and cons ("The small print") side by side */
+.pc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+.love, .small-print { padding: 4px 14px 12px; border: 3px dashed var(--ink); }
+.love { background: #e7fff4; }
+.small-print { background: #fff0f5; font-size: .9rem; }
+
+/* Fake dog reviews (TV-shopping style testimonials) */
+.review {
+  margin-top: 18px;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  padding: 12px 16px;
+  font-family: "Chalkboard SE", "Comic Sans MS", "Comic Neue", cursive;
+  position: relative;
+}
+.review .stars { color: var(--orange); font-size: 1.3rem; letter-spacing: 2px; }
+.review .who { display: block; text-align: right; font-weight: bold; }
+.review .verdict { font-family: Verdana, sans-serif; font-size: .9rem; margin-top: 8px; border-top: 2px dotted #999; padding-top: 6px; }
+
+/* Price + "Book now" row */
+.price-row { display: flex; align-items: center; gap: 22px; margin-top: 18px; flex-wrap: wrap; }
+.price-row p { flex: 1; min-width: 240px; margin: 0; }
+.stamp {
+  font-family: "Bungee", Impact, sans-serif;
+  color: #e00034;
+  border: 5px double #e00034;
+  padding: 6px 14px;
+  transform: rotate(-10deg);
+  opacity: .85;
+  text-align: center;
+  line-height: 1.1;
+}
+.stamp small { display: block; font-family: Verdana, sans-serif; font-size: .6rem; }
+
+/* Link buttons – chunky 90s "click here" buttons */
+.links { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+.links a {
+  background: var(--yellow);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 5px 14px;
+  text-decoration: none;
+  font-size: .85rem;
+}
+.links a:hover { background: var(--magenta); color: #fff; }
+.links a:active { transform: translate(3px, 3px); box-shadow: none; }
 
 /* ---------- Comparison table ---------- */
-.table-wrap { overflow-x: auto; }   /* lets the table scroll sideways on small phones */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--card);
-  font-size: .95rem;
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; background: #fff; }
+th, td { border: 2px solid var(--ink); padding: 7px 9px; text-align: left; }
+th { background: var(--purple); color: #fff; font-family: "Bungee", Impact, sans-serif; font-weight: normal; font-size: .8rem; }
+tr:nth-child(even) td { background: #fff7cc; }
+
+/* ---------- Footer ---------- */
+footer { color: #fff; font-size: .78rem; padding: 10px 0 40px; text-shadow: 1px 1px 0 var(--ink); }
+footer a { color: var(--yellow); font-weight: normal; }
+.counter {
+  display: inline-block;
+  font-family: "Courier New", monospace;
+  background: var(--ink);
+  color: #39ff14;           /* neon green digits */
+  padding: 2px 8px;
+  letter-spacing: 3px;
+  border: 2px inset #888;
+  text-shadow: none;
 }
-th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; }
-th { background: #eef1f4; }
+.credits { columns: 2; padding-left: 16px; }
 
-/* ---------- Footer with photo credits ---------- */
-footer { color: var(--muted); font-size: .8rem; padding: 20px 0 40px; }
-footer ul { padding-left: 16px; }
+/* ---------- Phones: stack things vertically ---------- */
+@media (max-width: 700px) {
+  .gallery { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .facts div:nth-child(2) { border-right: none; }
+  .facts div:nth-child(-n+2) { border-bottom: 3px solid var(--ink); }
+  .pc { grid-template-columns: 1fr; }
+  .panel { padding: 18px; box-shadow: 6px 6px 0 var(--ink); }
+  .option h2 { margin-right: 80px; }
+  .option > .burst { width: 100px; height: 100px; font-size: .65rem; right: -12px; }
+  .option > .burst b { font-size: .9rem; }
+  .credits { columns: 1; }
+}
 
-/* ---------- Phone layout: put side-by-side boxes on top of each other ---------- */
-@media (max-width: 640px) {
-  .hero h1 { font-size: 1.9rem; }
-  .pc, .info { grid-template-columns: 1fr; }
-  .option { padding: 16px; }
+/* People who switch off animations in their system settings get a still page */
+@media (prefers-reduced-motion: reduce) {
+  .ticker span, .burst { animation: none; }
 }
